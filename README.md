@@ -2,9 +2,9 @@
 
 Application provides an example of connection to the bank accounts using Tink API
 
-# Notes: 
-- To start application on localhost CORS policy has to be disabled in a browser.
-- To load company logo is used a fake service with mocked data
+# Configuration to start application: 
+- Create a .env file in packages/ui directory and fill with actual variables (use .env_example)
+- CORS policy has to be disabled in a browser.
 
 # How to use 
 All commands have to be run from project root directory
