@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import Grid from '@material-ui/core/Grid'
 import LinearProgress from '@material-ui/core/LinearProgress'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { makeStyles } from '@material-ui/core/styles'
 import { useAuth } from '../../auth/hooks/useAuth'
 import { transactionsServices } from '../../services/transactionsServices'
@@ -22,6 +23,10 @@ const useStyles = makeStyles({
     root: {
         flexGrow: 1,
         padding: '1rem 0'
+    },
+    cardContainer: {
+        textAlign: 'center',
+        paddingTop: '2rem'
     }
 })
 
@@ -36,7 +41,7 @@ export const AccountPage: React.FC = () => {
 
     const { isLoading, refetch } = useQuery(
         'transactions',
-        () => withToken<TransactionsResponse>(loadTransactions)(offset),
+        () => withToken<TransactionsResponse>(loadTransactions)('last year', offset),
         {
             onSuccess: (data) => {
                 const { results } = data
@@ -81,12 +86,14 @@ export const AccountPage: React.FC = () => {
                 <Grid item xs={4}>
                     <MerchantsList expenses={expenses} onSelect={handleSelect}/>
                 </Grid>
-                <Grid item xs={3}>
-                    {biggestExpense && (
-                        <MerchantCard
-                            expense={selectedMerchant || biggestExpense}
-                            year="2020"
+                <Grid item xs={3} className={styles.cardContainer}>
+                    {biggestExpense ? (
+                         <MerchantCard
+                             expense={selectedMerchant || biggestExpense}
+                             year="2020"
                         />
+                    ): (
+                        <CircularProgress />
                     )}
                 </Grid>
             </Grid>

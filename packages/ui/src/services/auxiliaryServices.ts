@@ -7,7 +7,7 @@ export interface IAuxiliaryServicesImpl {
 export class AuxiliaryServicesImpl implements IAuxiliaryServicesImpl {
     loadCompanyLogo = async (companyName: string): Promise<CompanyInfo> => {
         const res = await fetch(
-            'http://localhost:3002/logos',
+            `${process.env.REACT_APP_API_LOGOS_HOST}/logos`,
             {
                 method: 'POST',
                 headers: {

@@ -58,11 +58,11 @@ export const useProvideAuth = () => {
         return (
             inMemoryToken &&
             expirationDate &&
-            new Date(expirationDate) > new Date(Date.now())
+            new Date(expirationDate) > new Date()
         )
     }
 
-    const isRefreshTokenExists = () => {
+    const doesRefreshTokenExist = () => {
         const refreshToken =  Cookies.get('refresh_token')
 
         return refreshToken
@@ -76,7 +76,7 @@ export const useProvideAuth = () => {
         logIn,
         renewToken,
         isAccessValid,
-        isRefreshTokenExists,
+        doesRefreshTokenExist,
         withToken
     }
 }

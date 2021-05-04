@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
+import LinearProgress from '@material-ui/core/LinearProgress'
 import { Route, Redirect, RouteProps } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 
 export const PrivateRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
-    const [value, update] = useState(false)
-    const { isAccessValid, isRefreshTokenExists, renewToken } = useAuth()
+    const [isAccessTokenLoaded, updateTokenLoadStatus] = useState(false)
+    const { isAccessValid, doesRefreshTokenExist, renewToken } = useAuth()
 
     return (
         <Route
@@ -14,13 +15,11 @@ export const PrivateRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
                     return children
                 }
 
-                if (isRefreshTokenExists()) {
+                if (doesRefreshTokenExist() && !isAccessTokenLoaded) {
                     renewToken().then(() => {
-                        update(!value)
+                        updateTokenLoadStatus(true)
                     })
-                    return (
-                        <p>.... renew token</p>
-                    )
+                    return <LinearProgress />
                 }
 
                 return (
