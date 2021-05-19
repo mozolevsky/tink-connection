@@ -43,6 +43,7 @@ export const AccountPage: React.FC = () => {
         'transactions',
         () => withToken<TransactionsResponse>(loadTransactions)('last year', offset),
         {
+            enabled: false,
             onSuccess: (data) => {
                 const { results } = data
 
